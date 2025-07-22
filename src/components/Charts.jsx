@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import { CategoryScale, Chart, LinearScale, LineController, LineElement, PointElement, Title, Tooltip, Legend, BarElement, ArcElement, } from 'chart.js';
+import { CategoryScale, Chart, LinearScale, LineController, LineElement, PointElement, BarElement, ArcElement,  Tooltip,
+  Legend} from 'chart.js';
 
 Chart.register([
     CategoryScale,
@@ -9,13 +10,15 @@ Chart.register([
     PointElement,
     BarElement,
     ArcElement,
-    Title,
     Tooltip,
     Legend
 ]);
 import { Bar } from 'react-chartjs-2';
 import { Doughnut } from 'react-chartjs-2';
 
+import { Link } from "react-router-dom";
+
+// Fetching the data from API
 const Charts = () => {
     const [crypto, setCrypto] = useState([]);
 
@@ -35,7 +38,8 @@ const Charts = () => {
         return sum + (coin.total_supply || 0);
     }, 0);
 
-    const chartData = {
+    // Bar Data
+    const barData = {
         labels: crypto.map((coin) => coin.name),
         datasets: [
             {
@@ -47,30 +51,31 @@ const Charts = () => {
         ],
     };
 
-    const options = {
+    const barOptions = {
         responsive: true,
         plugins: {
             legend: {
                 display: true,
                 labels: {
-                    color: "#ffffff", // optional: white legend text
+                    color: "#ffffff",
                 },
             },
         },
         scales: {
             x: {
                 ticks: {
-                    color: "#ffffff", // optional: white labels
+                    color: "#ffffff",
                 },
             },
             y: {
                 ticks: {
-                    color: "#ffffff", // optional: white labels
+                    color: "#ffffff",
                 },
             },
         },
     };
 
+    //Doughnut Data
     const doughnutData = {
         labels: crypto.slice(0, 6).map((coin) => coin.name),
         datasets: [
@@ -78,65 +83,76 @@ const Charts = () => {
                 label: 'Market Cap Share',
                 data: crypto.slice(0, 6).map((coin) => coin.market_cap),
                 backgroundColor: [
-                    '#FF4C61', 
-                    '#4FC3F7',  
-                    '#FFD600', 
-                    '#00E5A0', 
-                    '#B388FF', 
-                    '#FF9100', 
+                    '#FF4C61',
+                    '#4FC3F7',
+                    '#FFD600',
+                    '#00E5A0',
+                    '#B388FF',
+                    '#FF9100',
                 ],
                 borderColor: '#1e1e1e',
                 borderWidth: 0,
             },
         ],
     };
+
     const doughnutOptions = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
+                display: true,
                 position: 'top',
             },
         },
     };
 
+    const Cards = [
+
+        {
+            id: 1,
+            info: <> <h3 className="text-4xl opacity-75 font-bold">Total Price</h3>
+                <p className="text-xl opacity-45 font-semibold">{totalSupply.toLocaleString()} $</p></>
+        },
+        {
+            id: 2,
+            info: <> <h3 className="text-4xl opacity-75 font-bold">Top Trending</h3>
+                <p className="text-xl opacity-45 font-semibold">#1 {crypto[0]?.name} </p></>
+        },
+        {
+            id: 3,
+            info: <> <h3 className="text-4xl opacity-75 font-bold">Coins Tracked</h3>
+                <p className="text-xl opacity-45 font-semibold">{crypto.length}</p></>
+        },
+
+    ]
+
     return (
         <>
-            <div className="charts-container w-full my-3 overflow-hidden flex items-start gap-3 text-white">
+            <div className="charts-container w-full mx-auto my-3 overflow-hidden flex items-center gap-3 text-white">
 
-                <div className="left flex flex-col gap-4 items-start">
+                <div className="left flex flex-col gap-4">
                     <div className="cards flex items-center gap-3">
-                        <div className="card px-3 py-4 flex flex-col items-center justify-center gap-4 min-w-[350px] h-[200px] bg-[#0d1b2a] shadow-xl rounded-lg">
-                            <h3 className="text-4xl opacity-75 font-bold">Total Price</h3>
-                            <p className="text-xl opacity-45 font-semibold">{totalSupply.toLocaleString()} $</p>
-                        </div>
-
-                        <div className="card px-3 py-4 flex flex-col items-center justify-center gap-4 min-w-[350px] h-[200px] bg-[#0d1b2a] shadow-xl rounded-lg">
-                            <h3 className="text-4xl opacity-75 font-bold">Most Trending</h3>
-                            <p className="text-xl opacity-45 font-semibold">#1 {crypto[0]?.name} </p>
-                        </div>
-
-                        <div className="card px-3 py-4 flex flex-col items-center justify-center gap-4 min-w-[350px] h-[200px] bg-[#0d1b2a] shadow-xl rounded-lg">
-                            <h3 className="text-4xl opacity-75 font-bold">Coins Tracked</h3>
-                            <p className="text-xl opacity-45 font-semibold">{crypto.length}</p>
-                        </div>
+                        {Cards.map((c) => (
+                            <div key={c.id} className="card px-3 py-4 flex flex-col items-center justify-center gap-4 min-w-[350px] h-[200px] bg-[#0d1b2a] shadow-xl rounded-lg">{c.info}</div>
+                        ))}
                     </div>
 
                     <div className="flex gap-3 items-center justify-center mx-auto">
                         <div className="min-w-[530px] h-[400px] px-3 py-4 bg-[#0d1b2a] shadow-xl rounded-lg">
                             <div className="w-full h-[700px]">
-                                <Bar data={chartData} options={options} />
+                                <Bar data={barData} options={barOptions} />
                             </div>
                         </div>
-                        <div className="min-w-[530px] h-[400px] px-3 py-4 bg-[#0d1b2a] shadow-xl rounded-lg">
-                            <div className="w-fit h-[350px]">
-                                <Doughnut data={doughnutData} options={doughnutOptions}/>
+                        <div className="min-w-[530px] h-[400px]  px-3 py-4 bg-[#0d1b2a] shadow-xl rounded-lg">
+                            <div className="w-fit h-[350px] mx-auto">
+                                <Doughnut data={doughnutData} options={doughnutOptions} />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="right flex flex-col gap-4 items-start">
+                <div className="right flex flex-col gap-4">
                     <div className="min-w-[400px] h-[600px] overflow-y-scroll px-3 py-4 bg-[#0d1b2a] shadow-xl rounded-lg">
                         <h2 className="text-xl font-semibold mb-4">Top Cryptos</h2>
 
@@ -146,7 +162,7 @@ const Charts = () => {
                                     <div className="flex items-center gap-3">
                                         <img src={coin.image} alt={coin.name} className="w-6 h-6 animate-pulse" />
                                         <div>
-                                            <p className="font-medium text-lg">{coin.name}</p>
+                                            <Link to={`/coin/${coin.id}`} className="font-medium text-lg hover:underline">{coin.name}</Link>
                                             <p className="text-sm text-gray-400 uppercase">{coin.symbol}</p>
                                         </div>
                                     </div>
