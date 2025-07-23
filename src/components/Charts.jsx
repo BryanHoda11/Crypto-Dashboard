@@ -118,17 +118,17 @@ const Charts = () => {
 
         {
             id: 1,
-            info: <> <h3 className="text-2xl sm:text-4xl opacity-75 font-bold">Total Price</h3>
+            info: <> <h3 className="text-2xl sm:text-3xl opacity-75 font-bold">Total Price</h3>
                 <p className="text-lg sm:text-xl opacity-45 font-semibold">{totalSupply.toLocaleString()} $</p></>
         },
         {
             id: 2,
-            info: <> <h3 className="text-2xl sm:text-4xl opacity-75 font-bold">Top Trending</h3>
+            info: <> <h3 className="text-2xl sm:text-3xl opacity-75 font-bold">Top Trending</h3>
                 <p className="text-lg sm:text-xl opacity-45 font-semibold">#1 {crypto[0]?.name} </p></>
         },
         {
             id: 3,
-            info: <> <h3 className="text-2xl sm:text-4xl opacity-75 font-bold">Coins Tracked</h3>
+            info: <> <h3 className="text-2xl sm:text-3xl opacity-75 font-bold">Currencies Tracked</h3>
                 <p className="text-lg sm:text-xl opacity-45 font-semibold">{crypto.length}</p></>
         },
 
@@ -160,7 +160,7 @@ const Charts = () => {
                 </div>
 
                 <div className="right flex flex-col gap-4">
-                    <div className="min-w-[300px] max-sm:px-4 sm:min-w-[400px] h-[550px] mx-auto overflow-y-scroll px-3 py-4 bg-[#0d1b2a] shadow-xl rounded-lg">
+                    <div className="min-w-[320px] max-sm:px-4 sm:min-w-[400px] h-[550px] mx-auto overflow-y-scroll px-3 py-4 bg-[#0d1b2a] shadow-xl rounded-lg">
                         <h2 className="text-xl font-semibold mb-4">Top Cryptos</h2>
 
                         <ul className="flex flex-col">
