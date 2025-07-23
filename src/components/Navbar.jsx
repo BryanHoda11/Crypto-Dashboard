@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 const Navbar = () => {
     return (
         <>
-            <nav className="p-6 sm:my-3 flex max-sm:flex-col max-sm:gap-3 justify-between items-center text-white bg-[#0d1b2a] shadow-xl sm:rounded-lg">
+            <nav className="p-6 my-3 flex max-md:flex-col max-md:gap-3 justify-between items-center text-white bg-[#0d1b2a] shadow-xl sm:rounded-lg">
                 <Link to='/' className="logo text-lg sm:text-2xl font-semibold">Crypto Dashboard</Link>
 
                 <div className="warning">
